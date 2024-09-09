@@ -1,0 +1,17 @@
+meta {
+  name: DELETE CLIP
+  type: http
+  seq: 3
+}
+
+delete {
+  url: http://localhost:5000/api/clips/66ded6caa6bccf46619930e9
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "clipContent": ""
+  }
+}
