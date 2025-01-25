@@ -17,7 +17,7 @@ const Workspace = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="">
       <div className="grid grid-cols-3 gap-5 w-full p-10">
         {columns.map((item) => (
           <ColumnContainer key={item.id} colId={item.id} colTitle={item.title} />
