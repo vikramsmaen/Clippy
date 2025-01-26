@@ -5,7 +5,7 @@ import ClipContainer from "./ClipContainer";
 import { useState } from "react";
 
 const ColumnContainer = (props) => {
-  const { colTitle, colId, onDelete } = props;
+  const { colTitle, colId, onDelete, onUpdateTitle } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(colTitle);
 
@@ -19,10 +19,12 @@ const ColumnContainer = (props) => {
 
   const handleTitleBlur = () => {
     setIsEditing(false);
-    updateTitleOnServer(title);
+    if (onUpdateTitle) {
+      onUpdateTitle(colId, title);
+    }
   };
 
-  const handleDeleteColumn =  () => {
+  const handleDeleteColumn = () => {
     if (onDelete) {
       onDelete(colId);
     }

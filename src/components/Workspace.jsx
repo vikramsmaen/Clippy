@@ -15,6 +15,7 @@ const Workspace = () => {
   const getColumns = useQuery(api.functions.getColumns);
   const createColumn = useMutation(api.functions.createColumn);
   const deleteColumn = useMutation(api.functions.deleteColumn);
+  const updateColumn = useMutation(api.functions.updateColumn);
 
   const handleAddColumn = (title) => {
     const newColumn = {
@@ -34,7 +35,6 @@ const Workspace = () => {
     if (newColumnTitle.trim()) {
       handleAddColumn(newColumnTitle);
       createColumn({ title: newColumnTitle });
-
       setNewColumnTitle("");
     }
   };
@@ -42,6 +42,10 @@ const Workspace = () => {
   const handleDeleteColumn = (colId) => {
     setColumns(getColumns.filter((column) => column._id !== colId));
     deleteColumn({ id: colId });
+  };
+
+  const handleUpdateColumnTitle = (colId, newTitle) => {
+    updateColumn({ id: colId, title: newTitle });
   };
 
   const styles = [
@@ -61,6 +65,7 @@ const Workspace = () => {
               colId={item._id}
               colTitle={item.title}
               onDelete={handleDeleteColumn}
+              onUpdateTitle={handleUpdateColumnTitle}
             />
           ))}
 

@@ -23,3 +23,10 @@ export const deleteColumn = mutation({
     await ctx.db.delete(args.id);
   },
 });
+
+export const updateColumn = mutation({
+  args: { id: v.id("columns"), title: v.string() },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.id, { title: args.title });
+  },
+});
