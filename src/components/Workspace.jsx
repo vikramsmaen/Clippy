@@ -4,11 +4,17 @@ import ColumnContainer from "./ColumnContainer";
 
 import columnsData from "../data/columns";
 import WorkToolbar from "./WorkToolbar";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 const Workspace = () => {
   const [columns, setColumns] = useState(columnsData);
   const [isKanban, setIsKanban] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState("");
+
+  const getColumns = useQuery(api.functions.getColumns);
+  const createColumn = useMutation(api.functions.createColumn);
+  const deleteColumn = useMutation(api.functions.deleteColumn);
 
   const handleAddColumn = (title) => {
     const newColumn = {
@@ -27,8 +33,15 @@ const Workspace = () => {
     e.preventDefault();
     if (newColumnTitle.trim()) {
       handleAddColumn(newColumnTitle);
+      createColumn({ title: newColumnTitle });
+
       setNewColumnTitle("");
     }
+  };
+
+  const handleDeleteColumn = (colId) => {
+    setColumns(getColumns.filter((column) => column._id !== colId));
+    deleteColumn({ id: colId });
   };
 
   const styles = [
@@ -41,9 +54,15 @@ const Workspace = () => {
       <WorkToolbar isKanban={handleIsKanban} />
 
       <div className={isKanban ? styles[1].isKanban : styles[0].isGrid}>
-        {columns.map((item) => (
-          <ColumnContainer key={item.id} colId={item.id} colTitle={item.title} />
-        ))}
+        {getColumns &&
+          getColumns.map((item, index) => (
+            <ColumnContainer
+              key={index}
+              colId={item._id}
+              colTitle={item.title}
+              onDelete={handleDeleteColumn}
+            />
+          ))}
 
         <form onSubmit={handleFormSubmit} className="flex ">
           <input
