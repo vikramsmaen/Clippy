@@ -8,7 +8,7 @@ const Navbar = () => {
       </div>
       <div className="flex flex-1 justify-end px-2">
         <div className="flex items-stretch">
-          <input type="checkbox" value="dark" className="toggle theme-controller" />
+          <input type="checkbox" className="toggle theme-controller" />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import ThemeProvider from "@/lib/theme-provider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import ConvexClientProvider from "./ConvexClientProvider";
 
 export const metadata = {
   title: "Clipboard",
@@ -11,8 +11,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
       <body className="min-h-screen min-w-screen">
-        <Navbar />
-        {children}
+        <ConvexClientProvider>
+          <Navbar />
+          {children}
+        </ConvexClientProvider>
       </body>
     </html>
   );
